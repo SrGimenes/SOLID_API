@@ -1,15 +1,23 @@
 /* eslint-disable prettier/prettier */
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { hash } from 'bcryptjs'
 import { AuthenticateUseCase } from './authenticate'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 
+
+let usersRepository: InMemoryUsersRepository
+let sut: AuthenticateUseCase
+
 describe('Register Use Case', () => {
+    beforeEach(() => {
+        usersRepository = new InMemoryUsersRepository()
+        sut = new AuthenticateUseCase(usersRepository)
+    })
+
+
     it('should be able to authenticate', async () => {
 
-        const usersRepository = new InMemoryUsersRepository()
-        const sut = new AuthenticateUseCase(usersRepository)
 
         //Pattern system under test
 
@@ -28,10 +36,6 @@ describe('Register Use Case', () => {
         expect(user.id).toEqual(expect.any(String))
     })
     it('should not be able to authenticate with wrong email', async () => {
-
-        const usersRepository = new InMemoryUsersRepository()
-        const sut = new AuthenticateUseCase(usersRepository)
-
         //Pattern system under test
 
         await usersRepository.create({
