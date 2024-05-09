@@ -25,7 +25,7 @@ export class AuthenticateUseCase {
       throw new InvalidCredentialsError()
     }
 
-    //Boolean => "is" "has" "does"
+    //Boolean => "is" "has" "does", devemos sempre ter uma leitura de variável semantica
 
     const doesPasswordMatches = await compare(password, user.password_hash)
 
