@@ -44,7 +44,7 @@ describe('Register Use Case', () => {
             password_hash: await hash('123456', 6)
         })
 
-        expect(() => sut.execute({
+        await expect(() => sut.execute({
             email: 'gabriel.alencar@gmail.com',
             password: '123321'
         })).rejects.toBeInstanceOf(InvalidCredentialsError)
