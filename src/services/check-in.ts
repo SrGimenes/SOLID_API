@@ -19,8 +19,19 @@ export class CheckInUseCase {
     ) { }
 
     async execute({ userId, gymId }: CheckInUseCaseRequest): Promise<CheckInUseCaseResponse> {
+
+        const checkInOnSameDay = await this.checkInsRepository.findByUserIdOnDate(
+            userId,
+            new Date()
+        )
+
+        if (checkInOnSameDay) {
+            throw new Error()
+        }
+
         //buscar o usuário no banco pelo e-mail
         //comparar a senha salva no banco bate com a senha do param hash
+        // TDD - RED, GREEN, REFACTOR
 
         const checkIn = await this.checkInsRepository.create({
             gym_id: gymId,
